@@ -1,1 +1,5 @@
-# API key for YT: AIzaSyCjnptlqMxQvvtP-Ijkv9wLCM9IIURL4Mw
+from dotenv import load_dotenv
+import os
+
+load_dotenv() 
+API_KEY = os.environ.get('YOUTUBE_API_KEY')
