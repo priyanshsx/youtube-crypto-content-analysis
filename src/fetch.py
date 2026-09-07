@@ -19,7 +19,7 @@ youtube = build('youtube', 'v3', developerKey=API_KEY)
 
 # adding the channel IDs
 
-CHANNEL_IDs = [
+CHANNEL_IDS = [
     'UCqK_GSMbpiV8spgD3ZGloSw',
     'UC7KjtEJT6HvI3kBcF2I4vXg',
     'UCB8sMtMOYVY_m6jYZcnQdUA',
@@ -107,3 +107,32 @@ def get_video_details(video_ids, channel_name):
                 'comment_count': int(item['statistics'].get('commentCount', 0)) # same as above
             })
         return all_rows
+
+# defining the main function that 
+# loops over 1) every channel in CHANNEL_IDS, pulls its videos in batches, and 
+# combines everything into one final .csv file 
+
+def main(): 
+    all_data = [] # accumulates every video from every channel into this 
+
+    # self-disclosure: took claude's help for converting the channel_id into channel_name
+    for channel_id in CHANNEL_IDS: 
+        channel_response = youtube.channels().list(part='snippet', id=channel_id).execute()
+        channel_name = channel_response['items'][0]['snippet']['title']
+
+        # added a little progress tracker while the function runs 
+        print(f"Fetching for {channel_name}")     
+
+        # for the given channel, get its last 50 video ids
+        video_ids = get_video_ids(channel_id, max_results=VIDEOS_PER_CHANNEL)
+
+        # get full details for those specific video ids
+        video_data = get_video_details(video_ids, channel_name)
+
+        all_data.extend(video_data)
+
+    # converting the list of dicts into a proper table
+    df = pd.DataFrame(all_data)
+
+    df.to_csv('home/priyansh/Documents/d/youtube crypto content analysis/data/raw/youtube_videos.csv', index=False)
+    print(f"Saved {len(df)} rows to youtube_videos.csv")
