@@ -9,6 +9,11 @@ from googleapiclient.discovery import build
 load_dotenv()
 API_KEY = os.environ.get('YOUTUBE_API_KEY')
 
+if not API_KEY:
+    raise RuntimeError(
+        'YOUTUBE_API_KEY is not set. Add it to the project-root .env file or export it before running this script.'
+    )
+
 youtube = build('youtube', 'v3', developerKey=API_KEY)
 
 # channel IDs
@@ -140,6 +145,10 @@ def main():
     # converting the list of dicts into a proper table
     df = pd.DataFrame(all_data)
 
-    os.mkdirs('raw_data', exist_ok=True)
+    os.makedirs('raw_data', exist_ok=True)
     df.to_csv('raw_data/youtube_videos.csv', index=False)
     print(f"Saved {len(df)} rows to youtube_videos.csv")
+
+
+if __name__ == '__main__':
+    main()

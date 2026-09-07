@@ -1,4 +1,11 @@
 .env
-__pycache__/ 
+.python-version
+venv/
+.venv/
+source/
+src/myenv/
+raw_data/
+__pycache__/
 *.pyc
 .ipynb_checkpoints/
+.vscode/
