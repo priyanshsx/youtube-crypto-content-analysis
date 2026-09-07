@@ -74,3 +74,5 @@ def parse_duration(iso_duration):
 
     # computing everything into seconds 
     return hours * 3600 + minutes * 60 + seconds
+
+# now we need to extract 50 videos from each channel 
