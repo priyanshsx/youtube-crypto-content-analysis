@@ -76,3 +76,34 @@ def parse_duration(iso_duration):
     return hours * 3600 + minutes * 60 + seconds
 
 # now we need to extract 50 videos from each channel 
+# created a function that helps pull title, views, likes, comments, and duration 
+# we batch the videos in groups of 50s because youtube's videos.list allows up to 50 video IDs per single API call 
+
+def get_video_details(video_ids, channel_name):
+    all_rows = [] # for storing one dict per video 
+
+    for i in range(0, len(video_ids), 50):
+        # grabbing 50 videos starting at index i
+        batch = video_ids[i:i+50]
+
+        request = youtube.videos().list(
+            # snippet: title/date, statistics: likes/views/comments, contentdetails: duration
+            part='snippet, statistics, contentDetails',
+            id = ','.join(batch)
+        )
+
+        response = request.execute()
+
+        # self-disclosure: took claude's help for indexing video details 
+        for item in response['items']:
+            all_rows.append({
+                'channel_name': channel_name,
+                'video_id': item['id'],
+                'title': item['snippet']['title'],
+                'publish_date': item['snippet']['publishedAt'],
+                'duration_seconds': parse_duration(item['contentDetails']['duration']),
+                'view_count': int(item['statistics'].get('viewCount', 0)), # adding 0 if view count not available 
+                'like_count': int(item['statistics'].get('likeCount', 0)), # same as above
+                'comment_count': int(item['statistics'].get('commentCount', 0)) # same as above
+            })
+        return all_rows
