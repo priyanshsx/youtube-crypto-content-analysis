@@ -3,3 +3,5 @@ import os
 
 load_dotenv() 
 API_KEY = os.environ.get('YOUTUBE_API_KEY')
+
+channel_list = []
