@@ -56,3 +56,21 @@ def get_video_ids(channel_id, max_results=50):
         if not next_page_token: 
             break
     return video_ids
+
+# parser function to help convert the youtube-reported time of  ISO 8601 to seconds
+# self-disclosure: took claude's help to write this bit as it wasn't something i had studied previously 
+ 
+def parse_duration(iso_duration):
+
+    # ensuring that only those digits are captured which are present as all videos may not be hour-long
+
+    match = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', iso_duration)
+
+    # extracting just the numbers from each group 
+
+    hours = int(match.group(1)) if match.group(1) else 0 
+    minutes = int(match.group(2)) if match.group(2) else 0
+    seconds = int(match.group(3)) if match.group(3) else 0
+
+    # computing everything into seconds 
+    return hours * 3600 + minutes * 60 + seconds
