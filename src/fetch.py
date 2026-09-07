@@ -12,21 +12,27 @@ API_KEY = os.environ.get('YOUTUBE_API_KEY')
 youtube = build('youtube', 'v3', developerKey=API_KEY)
 
 # channel IDs
-# anthony pompliano: UCML9PlpcOxM_H53IM0fa4XA; the moon show: UCkIcpHGyZtp9Cdyoh5pL3Jg; moneyzg: UCIEvlRpHBVFthrF6pZzBEXw;
-# cryptosrus: UCIEvlRpHBVFthrF6pZzBEXw; virtualbacon:UCIEvlRpHBVFthrF6pZzBEXw; benjamin cowen: UCRvqjQPSeaWn-uEx-w0XOIg;
-# cryptobanter: UCybasP-2D2b5kTLAb_kvhWQ; discover crypto: UCB8sMtMOYVY_m6jYZcnQdUA; altcoin daily: UC7KjtEJT6HvI3kBcF2I4vXg;
-# coinbureau: UCqK_GSMbpiV8spgD3ZGloSw;
+# 1) anthony pompliano: UCML9PlpcOxM_H53IM0fa4XA; 
+# 2) the moon show: UCkIcpHGyZtp9Cdyoh5pL3Jg; 
+# 3) moneyzg: UCIEvlRpHBVFthrF6pZzBEXw;
+# 4) cryptosrus: UCMRAyvvdf0wVNoEXfyc-J3Q; 
+# 5) virtualbacon: UCcrEA_xd9Ldf1C8DIJYdyyA; 
+# 6) benjamin cowen: UCRvqjQPSeaWn-uEx-w0XOIg;
+# 7) cryptobanter: UCybasP-2D2b5kTLAb_kvhWQ; 
+# 8) discover crypto: UCB8sMtMOYVY_m6jYZcnQdUA; 
+# 9) altcoin daily: UC7KjtEJT6HvI3kBcF2I4vXg;
+# 10) coinbureau: UCnThE8FLrlN-tYvZhZL0uaA;
 
 # adding the channel IDs
 
 CHANNEL_IDS = [
-    'UCqK_GSMbpiV8spgD3ZGloSw',
+    'UCnThE8FLrlN-tYvZhZL0uaA',
     'UC7KjtEJT6HvI3kBcF2I4vXg',
     'UCB8sMtMOYVY_m6jYZcnQdUA',
     'UCybasP-2D2b5kTLAb_kvhWQ',
     'UCRvqjQPSeaWn-uEx-w0XOIg',
-    'UCIEvlRpHBVFthrF6pZzBEXw',
-    'UCIEvlRpHBVFthrF6pZzBEXw',
+    'UCcrEA_xd9Ldf1C8DIJYdyyA',
+    'UCMRAyvvdf0wVNoEXfyc-J3Q',
     'UCIEvlRpHBVFthrF6pZzBEXw',
     'UCkIcpHGyZtp9Cdyoh5pL3Jg',
     'UCML9PlpcOxM_H53IM0fa4XA'
@@ -50,7 +56,7 @@ def get_video_ids(channel_id, max_results=50):
             pageToken=next_page_token
         )
         response = request.execute()
-        for item in response('items'):
+        for item in response['items']:
             video_ids.append(item['id']['videoId'])
         next_page_token = response.get('nextPageToken')
         if not next_page_token: 
@@ -88,7 +94,7 @@ def get_video_details(video_ids, channel_name):
 
         request = youtube.videos().list(
             # snippet: title/date, statistics: likes/views/comments, contentdetails: duration
-            part='snippet, statistics, contentDetails',
+            part='snippet,statistics,contentDetails',
             id = ','.join(batch)
         )
 
@@ -106,7 +112,7 @@ def get_video_details(video_ids, channel_name):
                 'like_count': int(item['statistics'].get('likeCount', 0)), # same as above
                 'comment_count': int(item['statistics'].get('commentCount', 0)) # same as above
             })
-        return all_rows
+    return all_rows
 
 # defining the main function that 
 # loops over 1) every channel in CHANNEL_IDS, pulls its videos in batches, and 
@@ -134,5 +140,6 @@ def main():
     # converting the list of dicts into a proper table
     df = pd.DataFrame(all_data)
 
-    df.to_csv('home/priyansh/Documents/d/youtube crypto content analysis/data/raw/youtube_videos.csv', index=False)
+    os.mkdirs('raw_data', exist_ok=True)
+    df.to_csv('raw_data/youtube_videos.csv', index=False)
     print(f"Saved {len(df)} rows to youtube_videos.csv")
