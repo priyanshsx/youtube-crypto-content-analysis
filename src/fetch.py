@@ -17,30 +17,30 @@ if not API_KEY:
 youtube = build('youtube', 'v3', developerKey=API_KEY)
 
 # channel IDs
-# 1) anthony pompliano: UCML9PlpcOxM_H53IM0fa4XA; 
-# 2) the moon show: UCkIcpHGyZtp9Cdyoh5pL3Jg; 
-# 3) moneyzg: UCIEvlRpHBVFthrF6pZzBEXw;
-# 4) cryptosrus: UCMRAyvvdf0wVNoEXfyc-J3Q; 
-# 5) virtualbacon: UCcrEA_xd9Ldf1C8DIJYdyyA; 
-# 6) benjamin cowen: UCRvqjQPSeaWn-uEx-w0XOIg;
-# 7) cryptobanter: UCybasP-2D2b5kTLAb_kvhWQ; 
-# 8) discover crypto: UCB8sMtMOYVY_m6jYZcnQdUA; 
-# 9) altcoin daily: UC7KjtEJT6HvI3kBcF2I4vXg;
-# 10) coinbureau: UCnThE8FLrlN-tYvZhZL0uaA;
+# 1) anthony pompliano 
+# 2) the moon show 
+# 3) moneyzg
+# 4) cryptosrus
+# 5) virtualbacon
+# 6) benjamin cowen
+# 7) cryptobanter
+# 8) discover crypto 
+# 9) altcoin daily
+# 10) coinbureau
 
 # adding the channel IDs
 
 CHANNEL_IDS = [
-    'UCnThE8FLrlN-tYvZhZL0uaA',
-    'UC7KjtEJT6HvI3kBcF2I4vXg',
-    'UCB8sMtMOYVY_m6jYZcnQdUA',
-    'UCybasP-2D2b5kTLAb_kvhWQ',
-    'UCRvqjQPSeaWn-uEx-w0XOIg',
-    'UCcrEA_xd9Ldf1C8DIJYdyyA',
-    'UCMRAyvvdf0wVNoEXfyc-J3Q',
-    'UCIEvlRpHBVFthrF6pZzBEXw',
+    'UCML9PlpcOxM_H53IM0fa4XA',
     'UCkIcpHGyZtp9Cdyoh5pL3Jg',
-    'UCML9PlpcOxM_H53IM0fa4XA'
+    'UCIEvlRpHBVFthrF6pZzBEXw',
+    'UCMRAyvvdf0wVNoEXfyc-J3Q',
+    'UCcrEA_xd9Ldf1C8DIJYdyyA',
+    'UCRvqjQPSeaWn-uEx-w0XOIg',
+    'UCybasP-2D2b5kTLAb_kvhWQ',
+    'UCjemQfjaXAzA-95RKoy9n_g',
+    'UCbLhGKVY-bJPcawebgtNfbw',
+    'UCnThE8FLrlN-tYvZhZL0uaA'
 ] 
 
 VIDEOS_PER_CHANNEL = 50
