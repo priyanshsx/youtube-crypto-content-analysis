@@ -32,15 +32,15 @@ youtube = build('youtube', 'v3', developerKey=API_KEY)
 
 CHANNEL_IDS = [
     'UCML9PlpcOxM_H53IM0fa4XA',
-    'UCkIcpHGyZtp9Cdyoh5pL3Jg',
+    'UCc4Rz_T9Sb1w5rqqo9pL1Og',
     'UCIEvlRpHBVFthrF6pZzBEXw',
-    'UCMRAyvvdf0wVNoEXfyc-J3Q',
+    'UCI7M65p3A-D3P4v5qW8POxQ',
     'UCcrEA_xd9Ldf1C8DIJYdyyA',
     'UCRvqjQPSeaWn-uEx-w0XOIg',
-    'UCybasP-2D2b5kTLAb_kvhWQ',
+    'UCN9Nj4tjXbVTLYWN0EKly_Q',
     'UCjemQfjaXAzA-95RKoy9n_g',
     'UCbLhGKVY-bJPcawebgtNfbw',
-    'UCnThE8FLrlN-tYvZhZL0uaA'
+    'UCqK_GSMbpiV8spgD3ZGloSw'
 ] 
 
 VIDEOS_PER_CHANNEL = 50
@@ -48,24 +48,28 @@ VIDEOS_PER_CHANNEL = 50
 # building the get videos function 
 
 def get_video_ids(channel_id, max_results=50):
-    video_ids = []
-    next_page_token = None # since youtube paginates results 
+    # Convert channel ID to its uploads playlist ID (UC -> UU)
+    uploads_playlist_id = 'UU' + channel_id[2:]
 
-    while len(video_ids) < max_results: 
-        request = youtube.search().list(
-            part='id',
-            channelId=channel_id,
-            order='date',
-            type='video',
+    video_ids = []
+    next_page_token = None
+
+    while len(video_ids) < max_results:
+        request = youtube.playlistItems().list(
+            part='contentDetails',
+            playlistId=uploads_playlist_id,
             maxResults=min(50, max_results - len(video_ids)),
             pageToken=next_page_token
         )
         response = request.execute()
+
         for item in response['items']:
-            video_ids.append(item['id']['videoId'])
+            video_ids.append(item['contentDetails']['videoId'])
+
         next_page_token = response.get('nextPageToken')
-        if not next_page_token: 
+        if not next_page_token:
             break
+
     return video_ids
 
 # parser function to help convert the youtube-reported time of  ISO 8601 to seconds
