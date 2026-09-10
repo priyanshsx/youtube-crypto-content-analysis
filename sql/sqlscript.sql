@@ -54,3 +54,12 @@ WHERE
 SELECT * FROM analyzed_videos_categories 
 
 -- we get 473 rows 
+
+-- analyzing for question 2 
+-- keywords to search for:
+-- coins: BTC/Bitcoin, ETH/Ethereum, altcoin 
+-- structural: ALL CAPS 
+-- news-reaction: US Fed, Japan, FOMC, breaking, urgent, alert, 
+-- price-prediction: price, next move, explodes, crash, collapse, dying, over, recover, recovery 
+-- coins: BTC/Bitcoin, ETH/Ethereum, altcoin/altcoins
+-- educational: how to, what is, guide, explained 
