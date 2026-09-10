@@ -20,3 +20,37 @@ CASE
     ELSE 'long'
 END AS video_length_category
 FROM youtube_videos 
+
+-- checking for videos with 0 views 
+
+SELECT COUNT(*) FROM videos_categories WHERE view_count = 0
+
+-- checking for NULLs in general  
+
+SELECT COUNT(*) FROM videos_categories 
+WHERE view_count = 0 OR comment_count = 0 OR like_count = 0
+
+-- checking for the exact null entries
+
+SELECT channel_name, title, view_count, like_count, comment_count, video_length_category 
+FROM videos_categories 
+WHERE 
+    view_count = 0 OR 
+    comment_count = 0 OR 
+    like_count = 0 
+
+-- creating a new table that filters out the 27 null rows from the current videos_categories table 
+
+CREATE TABLE analyzed_videos_categories AS 
+SELECT channel_name, video_id, title, duration_seconds, view_count, like_count, comment_count, engagement_rate, video_length_category
+FROM videos_categories
+WHERE 
+    view_count > 0 AND
+    comment_count > 0 AND 
+    like_count > 0  
+
+-- sanity check 
+
+SELECT * FROM analyzed_videos_categories 
+
+-- we get 473 rows 
