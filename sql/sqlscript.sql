@@ -140,4 +140,4 @@ CREATE TABLE question_two AS
 -- but since we'd like to analyze most of them, updating the keyword list to: 
 -- eu, democracy, melt-up, spacex, spy, spx, s&p500, dowj, nasdaq, banks, mistakes, crypto, 
 -- future, past, million, millions, china, mining, bitcoin mining, btc mining, 
--- 
+-- edited the script above
