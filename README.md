@@ -4,6 +4,8 @@
 
 This project analyzes YouTube performance metrics from top cryptocurrency channels to uncover how video duration and title semantics impact viewership and engagement. The end-to-end pipeline utilizes SQL(DuckDB) for data engineering, Python (Pandas/Scipy) for statistical analysis, and Tableau for interactive data visualization. 
 
+You can check out the public Tableau dashboard [here](https://public.tableau.com/views/YouTubeCryptoContentAnalysisTop50YouTubers/YoutubeCryptoContentAnalysisTop10?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link). 
+
 ## Research question 
 Across the top 10 crypto YouTube channels, does video length or title style predict engagement — and where does common "content strategy intuition" break down?
 
