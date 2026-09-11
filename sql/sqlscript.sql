@@ -63,3 +63,46 @@ SELECT * FROM analyzed_videos_categories
 -- price-prediction: price, next move, explodes, crash, collapse, dying, over, recover, recovery 
 -- coins: BTC/Bitcoin, ETH/Ethereum, altcoin/altcoins
 -- educational: how to, what is, guide, explained 
+
+CREATE TABLE question_two AS 
+    SELECT channel_name, title, duration_seconds, view_count, like_count, comment_count, engagement_rate, video_length_category,
+    CASE 
+        WHEN 
+            title ILIKE '%fomc%' OR
+            title ILIKE '%us fed%' OR
+            title ILIKE '%japan%' OR 
+            title ILIKE '%fomc' OR 
+            title ILIKE '%breaking' OR 
+            title ILIKE '%urgent' OR 
+            title ILIKE '%alert%'
+        THEN 'news-reaction'
+        WHEN 
+            title ILIKE '%btc%' OR 
+            title ILIKE '%bitcoin%' OR 
+            title ILIKE '%eth%' OR 
+            title ILIKE '%ethereum%' OR 
+            title ILIKE '%altcoin%' OR 
+            title ILIKE '%altcoins%'
+        THEN 'coins'
+        WHEN 
+            title ILIKE '%price%' OR 
+            title ILIKE '%next move%' OR 
+            title ILIKE '%explodes%' OR 
+            title ILIKE '%crash%' OR 
+            title ILIKE '%collapse%' OR 
+            title ILIKE '%dying%' OR 
+            title ILIKE '%over%' OR 
+            title ILIKE '%recover%' OR 
+            title ILIKE '%recovery%' 
+        THEN 'price-prediction'
+        WHEN 
+            title ILIKE '%how to%' OR 
+            title ILIKE '%here''s how%' OR 
+            title ILIKE '%what is%' OR 
+            title ILIKE '%guide%' OR 
+            title ILIKE '%explained%' OR 
+            title ILIKE '%you need to see this%'
+        THEN 'educational'
+        ELSE 'undefined'
+    END AS title_category
+    FROM analyzed_video_categories
