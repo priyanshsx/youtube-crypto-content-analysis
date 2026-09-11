@@ -26,4 +26,8 @@ corr, p_value = stats.pearsonr(df['duration_seconds'], df['engagement_rate'])
 # educational titles perform differently? 
 
 title_analysis_df = df.groupby('title_category')[['view_count', 'engagement_rate']].median()
-print(f"Title Analysis Median Values\n {title_analysis_df}")
+# print(f"Title Analysis Median Values\n {title_analysis_df}")
+
+# exporting to csv for vizzing on tableau
+df.to_csv('/home/priyansh/Documents/d/youtube crypto content analysis/data/processed/youtube_analysis_master.csv', index=False)
+print("Your csv was exported to /data/processed/youtube_analysis_master.csv")
