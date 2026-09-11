@@ -71,10 +71,22 @@ CREATE TABLE question_two AS
             title ILIKE '%fomc%' OR
             title ILIKE '%us fed%' OR
             title ILIKE '%japan%' OR 
-            title ILIKE '%fomc' OR 
-            title ILIKE '%breaking' OR 
-            title ILIKE '%urgent' OR 
-            title ILIKE '%alert%'
+            title ILIKE '%fomc%' OR 
+            title ILIKE '%breaking%' OR 
+            title ILIKE '%urgent%' OR 
+            title ILIKE '%alert%' OR
+            title ILIKE '%eu%' OR 
+            title ILIKE '%democracy%' OR 
+            title ILIKE '%spacex%' OR 
+            title ilike '%spy%' OR 
+            title ILIKE '%spx%' OR 
+            title ILIKE '%s&p500%' OR 
+            title ILIKE '%dowj%' OR 
+            title ILIKE '%nasdaq%' OR 
+            title ILIKE '%banks%' OR 
+            title ILIKE '%china%' OR 
+            title ILIKE '% ai %' OR 
+            title ILIKE '%artificial intelligence%'
         THEN 'news-reaction'
         WHEN 
             title ILIKE '%btc%' OR 
@@ -82,8 +94,24 @@ CREATE TABLE question_two AS
             title ILIKE '%eth%' OR 
             title ILIKE '%ethereum%' OR 
             title ILIKE '%altcoin%' OR 
-            title ILIKE '%altcoins%'
+            title ILIKE '%altcoins%' OR 
+            title ILIKE '%stablecoins%'
         THEN 'coins'
+        WHEN 
+            title ILIKE '%crypto%' OR
+            title ILIKE '%mining%' OR
+            title ILIKE '%bitcoin mining%' OR 
+            title ILIKE '%btc mining%' OR 
+            title ILIKE '%defi%' OR 
+            title ILIKE '% decentralized finance %'
+        THEN 'defi-general-crypto'
+        WHEN 
+            title ILIKE '%regulation%' OR 
+            title ILIKE '%regulatory%' OR 
+            title ILIKE '%clarity%' OR 
+            title ILIKE '%act%' OR 
+            title ILIKE '%acts%'
+        THEN 'regulation'
         WHEN 
             title ILIKE '%price%' OR 
             title ILIKE '%next move%' OR 
@@ -93,7 +121,8 @@ CREATE TABLE question_two AS
             title ILIKE '%dying%' OR 
             title ILIKE '%over%' OR 
             title ILIKE '%recover%' OR 
-            title ILIKE '%recovery%' 
+            title ILIKE '%recovery%' OR 
+            title ILIKE '%melt-up%' 
         THEN 'price-prediction'
         WHEN 
             title ILIKE '%how to%' OR 
@@ -106,3 +135,9 @@ CREATE TABLE question_two AS
         ELSE 'undefined'
     END AS title_category
     FROM analyzed_video_categories
+
+-- this gave us 173 undefined rows
+-- but since we'd like to analyze most of them, updating the keyword list to: 
+-- eu, democracy, melt-up, spacex, spy, spx, s&p500, dowj, nasdaq, banks, mistakes, crypto, 
+-- future, past, million, millions, china, mining, bitcoin mining, btc mining, 
+-- 
