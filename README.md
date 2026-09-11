@@ -1,21 +1,26 @@
 # YouTube Crypto Content Analysis
 
-# Overview 
+## Overview 
 
+This project analyzes YouTube performance metrics from top cryptocurrency channels to uncover how video duration and title semantics impact viewership and engagement. The end-to-end pipeline utilizes SQL(DuckDB) for data engineering, Python (Pandas/Scipy) for statistical analysis, and Tableau for interactive data visualization. 
 
-# Research question 
+## Research question 
 Across the top 10 crypto YouTube channels, does video length or title style predict engagement — and where does common "content strategy intuition" break down?
 
 We look at 2 angles: 
 1. Length vs. Engagement: does video length correlate with views/engagement rate (likes+comments per view)? Videos are bucketed into short (<10 min), medium (10-20 min.), long (20+ min) and compared. 
 2. Tite style vs. engagement: do price-prediction titles ("BTC to $100K"), news-reaction titles, or educational titles perform differently? 
 
-# Data Collection (Day 1)
-Source: YouTube Data API v3 (free, generous quota — no manual export needed)
-Scope: 10 crypto channels, last 50 videos each (~500 rows total) — fixed count instead of a time window, so channels with different posting frequencies still give you comparable sample sizes.
-Fields to pull per video: channel_name, video_id, title, publish_date, duration_seconds, view_count, like_count, comment_count
+## Data Engineering Pipeline
 
-# Channels this investigation focuses on 
+Extracted raw channel data and removed inactive outliers (videos with zero views, likes, or comments), resulting in a clean 473-row master dataset.
+
+Engineered a video_length_category column to intelligently bucket content into short (<10 min), medium (10-20 min), and long (>20 min) formats.
+
+Created a title_category column using layered CASE WHEN and ILIKE SQL statements to classify text into distinct thematic styles (e.g., News-Reaction, DeFi, Educational).
+
+
+## Channels this investigation focuses on 
 
 Channels were selected based on the following criteria:
 - Ranked among the top 15 English-language YouTube channels by subscriber count
@@ -26,3 +31,23 @@ Channels were selected based on the following criteria:
 - From this pool, the top 10 by subscriber count were selected for analysis
 
 These channels are: [Coin Bureau](https://www.youtube.com/@CoinBureau), [Altcoin Daily](https://www.youtube.com/@AltcoinDaily), [Discover Crypto](https://www.youtube.com/@DiscoverCrypto_), [Crypto Banter](https://www.youtube.com/@CryptoBanterGroup), [Benjamin Cowen](https://www.youtube.com/@benjaminjcowen), [VirtualBacon](https://www.youtube.com/@VirtualBacon), [CryptosRUs](https://www.youtube.com/@CryptosRUs), [MoneyZG](https://www.youtube.com/@MoneyZG), [The Moon Show](https://www.youtube.com/@TheMoon), [Anthony Pompliano](https://www.youtube.com/@AnthonyPompliano)
+
+## Key Analytical Findings 
+
+The Duration "Goldilocks Zone": Video length and engagement share a definitive non-linear relationship (Pearson r = 0.1201, p = 0.0089). Medium-length videos hit the sweet spot, maximizing both median views (20.6k) and median engagement rates (4.6%).
+
+The Reach Winner: Broad "DeFi/General Crypto" titles dominate algorithm reach, pulling in a massive 33.1k median views compared to other categories.
+
+The Engagement Winner: "News-Reaction" titles drive the highest active audience participation, capturing a 4.4% median engagement rate.
+
+The Educational Lag: Traditional "How-to" or "Explained" content severely underperforms in the crypto niche, capturing only 2k median views and a 2.5% engagement rate.
+
+## Strategic Recommendations 
+
+Optimize Duration: Target the 10-to-20-minute window for core uploads. Avoid extending past 20 minutes to prevent audience drop-off and diminishing returns.
+
+Top-of-Funnel Reach: Cast a wide net using broad DeFi and general crypto topics to attract new, unique viewers to the channel.
+
+Community Activation: Pivot to urgent, macro-news reaction videos to convert those passive viewers into highly engaged, commenting community members.
+
+Reevaluate Tutorials: Shift away from standard evergreen educational formats, as the current audience strongly prefers timely market updates and speculation.
