@@ -53,3 +53,25 @@ Top-of-Funnel Reach: Cast a wide net using broad DeFi and general crypto topics 
 Community Activation: Pivot to urgent, macro-news reaction videos to convert those passive viewers into highly engaged, commenting community members.
 
 Reevaluate Tutorials: Shift away from standard evergreen educational formats, as the current audience strongly prefers timely market updates and speculation.
+
+## How to reproduce 
+
+1. Clone the repo git clone youtube-crypto-content-analysis cd youtube-crypto-content-analysis
+
+2. Install dependencies pip install duckdb pandas numpy matplotlib scipy statsmodels google-api-python-client
+
+3. Pull raw data (or use the CSV already in youtube crypto content and analysis/raw_data/) python3 src/fetch.py
+
+4. Load into DuckDB and build the regime classification table python3 src/analysis.py
+
+5. Run the statistical analysis and generate the chart python3 src/analysis.py
+
+## Project Folder Structure 
+
+project-folder/
+├── raw_data/              # extracted youtube videos using channel id 
+├── db/                    # main.duckdb — the working database
+├── sql/                   # saved .sql scripts (table creation, regime classification)
+├── src/                   # python scripts (data pull, transformation, analysis)
+├── figures/               
+├── README.md
